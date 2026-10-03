@@ -3,7 +3,7 @@ SRC    = $(TARGET).c start.S
 OBJ    = $(TARGET).o start.o
 ELF    = $(TARGET).elf
 LDSCRIPT = esp8266.ld
-HEADER = include/esp8266.h include/gpio.h
+HEADER = include/esp8266.h include/pin_mux_register.h include/gpio.h include/functions.h
 
 PREFIX  = xtensa-lx106-elf-
 CC      = $(PREFIX)gcc

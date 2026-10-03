@@ -1,48 +1,36 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#include "esp8266.h"
+#include "ets.h"
 
 #define GPIO_BASE 0x60000300
-
-#define PERIPHS_IO_MUX 0x60000800
-#define PERIPHS_IO_MUX_GPIO2_U (PERIPHS_IO_MUX + 0x38)
-
-#define PERIPHS_IO_MUX_FUNC 0x13
-#define PERIPHS_IO_MUX_FUNC_S 4
-
-#define FUNC_GPIO2 0
 
 #define GPIO_OUT (GPIO_BASE + 0x00)
 #define GPIO_OUT_W1TS (GPIO_BASE + 0x04)
 #define GPIO_OUT_W1TC (GPIO_BASE + 0x08)
-
 #define GPIO_ENABLE (GPIO_BASE + 0x0C)
 #define GPIO_ENABLE_W1TS (GPIO_BASE + 0x10)
 #define GPIO_ENABLE_W1TC (GPIO_BASE + 0x14)
+#define GPIO_IN	(GPIO_BASE + 0x18)
+#define GPIO_STATUS (GPIO_BASE + 0x1C)
+#define GPIO_STATUS_W1TS (GPIO_BASE + 0x20)
+#define GPIO_STATUS_W1TC (GPIO_BASE + 0x24)
+#define GPIO_PIN0 (GPIO_BASE + 0x28)
 
-static inline void gpio_mode(void)
-{
-	uint32_t v = REG32(PERIPHS_IO_MUX_GPIO2_U);
 
-	v &= ~(PERIPHS_IO_MUX_FUNC << PERIPHS_IO_MUX_FUNC_S);
-	v |= (FUNC_GPIO2 << PERIPHS_IO_MUX_FUNC_S);
+#define GPIO_STATUS_ADDRESS                 0x1c
+#define GPIO_STATUS_INTERRUPT                   0x0000ffff
+#define GPIO_STATUS_INTERRUPT_S                 0
 
-	REG32(PERIPHS_IO_MUX_GPIO2_U) = v;
-}
+#define GPIO_STATUS_W1TS_ADDRESS            0x20
+#define GPIO_STATUS_INTERRUPT_W1TS              0x0000ffff
+#define GPIO_STATUS_INTERRUPT_W1TS_S            0
 
-static inline void gpio_output_enable(unsigned gpio)
-{
-	REG32(GPIO_ENABLE_W1TS) = BIT(gpio);
-}
+#define GPIO_STATUS_W1TC_ADDRESS            0x24
+#define GPIO_STATUS_INTERRUPT_W1TC              0x0000ffff
+#define GPIO_STATUS_INTERRUPT_W1TC_S            0
+#define GPIO_STATUS_INTERRUPT_DATA_MASK         0x0000ffff
 
-static inline void gpio_set(unsigned gpio)
-{
-	REG32(GPIO_OUT_W1TS) = BIT(gpio);
-}
-
-static inline void gpio_clear(unsigned gpio) {
-	REG32(GPIO_OUT_W1TC) = BIT(gpio);
-}
-
+#define GPIO_REG_READ(reg)                  READ_PERI_REG(GPIO_BASE + reg)
+#define GPIO_REG_WRITE(reg, val)            WRITE_PERI_REG(GPIO_BASE + reg, val)
 #endif

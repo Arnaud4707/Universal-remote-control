@@ -13,3 +13,5 @@ https://codeberg.org/tanche/MesNotes/src/branch/main/doc/sample.ld
 Overview of Xtensa ISA Espressif Systems Version 0021604, 2021-02-17
 
 Xtensa® Instruction Set Architecture (ISA) Summary For all Xtensa LX Processors
+
+https://github.com/espressif/ESP8266_RTOS_SDK/blob/master/components/esp8266/include/esp8266/pin_mux_register.h
